@@ -1,0 +1,19 @@
+<?php foreach ($articles as $article): ?>
+    <div class="article">
+      <div class="left">
+      <?php if ($article->getImage()): ?>
+                <img src="<?=asset('images/' . $article->getImage())?>" alt="">
+            <?php endif; ?>
+      </div>
+      <div class="right">
+      <small class="date"></small>Créé le <?=$article->getFormattedCreatedAt();?></small>
+        <h3><?=$article->getTitle();?></h3>
+
+        <div class="article-category"><?=$article->getCategoryName();?></div>
+
+        <p class="card-text"><?=mb_substr($article->getContent(), 0, 200)?> [...]</p>
+                  
+         <a class="btn-next" href="<?=constructUrl('article', ['id' => $article->getIdArticle()]);?>">Lire la suite</a>
+      </div>
+      <?php endforeach; ?>
+    </div> 

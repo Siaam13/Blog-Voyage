@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog - Voyage </title>
+  <link rel="stylesheet" href="<?=asset('css/style.css');?>">
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"/>
+</head>
+<body>
+  <nav>
+    <h1>Blog</h1>
+    <div class="onglets">
+      <a href="<?=constructUrl('home');?>">Accueil</a>
+      <a href="#">Catégories</a>
+      <a href="<?=constructUrl('register');?>">Inscription</a>
+      <a href="<?=constructUrl('login');?>">Connexion</a>
+      <a href="<?=constructUrl('contact');?>">Contact</a>
+
+    </div>
+  </nav>
+  
+    <section class="articles">
+
+
+    <!-- Message flash -->
+    <?php if (isset($flashMessage) && $flashMessage): ?>
+                <p class="success"><?=$flashMessage;?></p>
+            <?php endif; ?>
+
+      <!-- Contenu de la page --> 
+      <?php if (isset($template) && $template !== '') : ?>
+        <?php include $template . '.phtml'; ?>
+      <?php endif; ?>
+
+
+
+    </section>
+  
+  <footer>
+    
+    <div class="social-media">
+      <p><i class="fab fa-facebook"></i></p>
+      <p><i class="fab fa-twitter"></i></p>
+      <p><i class="fab fa-instagram"></i></p>
+    </div>
+    <p>@ Sebastien Lapeyre</p>
+  </footer>
+</body>
+</html>
