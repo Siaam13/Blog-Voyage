@@ -1,5 +1,7 @@
 <!-- login.phtml -->
-<form id="login-form">
+<h2> Connexion :</h2>
+
+<form id="login-form" action="<?= constructUrl('process-login') ?>" method="POST">
     <label for="username">Nom d'utilisateur :</label>
     <input type="text" id="username" name="username" required>
     

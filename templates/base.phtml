@@ -3,20 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Blog - Voyage </title>
+  <title>Blog - YourTravel.fr </title>
   <link rel="stylesheet" href="<?=asset('css/style.css');?>">
-  
+  <link rel="icon" href="<?=asset('images/Yourtravel.fr.logo.png');?>" type="image/png">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"/>
 </head>
 <body>
   <nav>
-    <h1>Blog</h1>
+    <div class="logo">
+    <img src="<?=asset('images/Yourtravel.fr.logo.png');?>">
+    <h1>Your Travel.fr</h1>
+    </div>
     <div class="onglets">
       <a href="<?=constructUrl('home');?>">Accueil</a>
       <a href="#">Catégories</a>
+      <?php if(isset($_SESSION['user'])): ?>
+      <a href="#">Mon compte</a>
+      <a href="<?=constructUrl('logout');?>">Déconnexion</a>
+    <?php else: ?>
       <a href="<?=constructUrl('register');?>">Inscription</a>
       <a href="<?=constructUrl('login');?>">Connexion</a>
-      <a href="<?=constructUrl('contact');?>">Contact</a>
+    <?php endif; ?>
+    <a href="<?=constructUrl('contact');?>">Contact</a>
 
     </div>
   </nav>

@@ -22,12 +22,6 @@ $routes = [
         'controller' => 'ContactController',
         'method' => 'sendForm'
     ],
-    // 'register' => [
-    //     'path' => '/register',
-    //     'controller' => 'AuthController',
-    //     'method' => 'register'
-
-    // ],
 
     'register' => [
         'path' => '/register',
@@ -44,6 +38,18 @@ $routes = [
         'path' => '/login',
         'controller' => 'AuthController',
         'method' => 'login'
+    ],
+
+    'process-login' => [
+        'path' => '/process-login',
+        'controller' => 'AuthController',
+        'method' => 'processLogin'
+    ],
+
+    'logout' => [
+        'path' => '/logout',
+        'controller' => 'LogoutController',
+        'method' => 'logout'
     ],
     
 

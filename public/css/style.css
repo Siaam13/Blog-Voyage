@@ -7,20 +7,34 @@ body{
 
 nav {
   display:flex;
+  align-items: center;
   flex-wrap:wrap;
   justify-content:space-between;
 }
-nav h1{
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+
+.logo img {
+  height: 50px;
+  margin-right: 10px;
+}
+/* nav h1{
   font-family: 'Crimson Text', serif;
   font-size: 30px;
-}
+} */
 nav .onglets{
-  margin-top: 35px;
+  /* margin-top: 35px; */
+  display: flex;
 }
 nav .onglets a{
   text-decoration: none;
   color:#7f7e7e;
-  margin-right: 10px;
+  /* margin-right: 10px; */
+  margin-left: 20px;
 }
 
 nav .onglets a:hover{
@@ -119,5 +133,54 @@ label {
     border: none;
     margin-top: 10px;
     box-shadow: 5px 4px 10px #0000005c;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
 }
 
+#btn-contact:hover {
+  color: white;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------- */
+/*                                                         Page Inscription                                 :                                         */
+
+#register-form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+#btn-register {
+  margin-top: 15px;
+  background-color: #ff623087;
+  border: none;
+  box-shadow: 5px 4px 10px #0000005c;
+  padding: 10px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#btn-register:hover {
+  color: white;
+  transform: scale(1.05);
+  cursor: pointer;
+}

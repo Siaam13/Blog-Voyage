@@ -1,7 +1,8 @@
 async function loadCountries() {
     try {
-        const response = await fetch('https://restcountries.com/v3.1/name/{name}');
+        const response = await fetch('https://restcountries.com/v3.1/all');
         const countries = await response.json();
+        countries.sort((a, b) => a.name.common.localeCompare(b.name.common)); // Tri des pays par nom commun
         const countrySelect = document.getElementById('country');
 
         countries.forEach(country => {
@@ -17,5 +18,3 @@ async function loadCountries() {
 
 // Chargez la liste des pays au chargement de la page
 loadCountries();
-
-

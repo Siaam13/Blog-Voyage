@@ -1,5 +1,7 @@
 <!-- register.phtml -->
-<form id="register-form" action="<?= constructUrl('process-registration') ?>" method="post">
+<h2>Inscription : </h2>
+
+<form id="register-form" action="<?= constructUrl('process-register') ?>" method="post">
     <label for="username">Nom d'utilisateur :</label>
     <input type="text" id="username" name="username" required>
     
@@ -29,7 +31,7 @@
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="password" required>
     
-    <button type="submit">S'inscrire</button>
+    <button id="btn-register" type="submit">S'inscrire</button>
 </form>
 
 <script src="<?=asset('js/CountryAPI.js');?>"></script>
