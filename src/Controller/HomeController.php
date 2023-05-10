@@ -1,12 +1,14 @@
 <?php 
 
 namespace App\Controller;
+require_once '../src/Service/UserSession.php';
+
 
 // Import de classes
 use App\Model\ArticleModel;
 
 class HomeController {
-
+    
     public function index() 
     {
         // Sélection des 3 derniers articles
@@ -15,6 +17,6 @@ class HomeController {
 
         // Affichage : inclusion du template
         $template = 'home';
-        include '../templates/base.phtml';
+        include TEMPLATE_DIR .'/base.phtml';
     }
 }

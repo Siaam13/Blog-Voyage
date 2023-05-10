@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Entity;
 
@@ -144,11 +144,32 @@ class Article {
         return $this->category->getName();
     }
 
-    /**
-     * Retourne la date de création de l'article formattée 
-     */
-    public function getFormattedCreatedAt(): string 
-    {
-        return $this->createdAt->format('d/m/Y');
+   
+ /*Retourne la date de création de l'article formatée 
+ */
+public function getFormattedCreatedAt(): string 
+{
+    return $this->createdAt->format('d/m/Y');
+}
+
+/**
+ * Retourne l'URL de l'image de l'article
+ */
+public function getImageUrl(): ?string 
+{
+    if ($this->image === null) {
+        return null;
     }
+
+    return '/uploads/' . $this->image;
+}
+
+/**
+ * Vérifie si l'article a une image
+ */
+public function hasImage(): bool 
+{
+    return $this->image !== null;
+}
+
 }

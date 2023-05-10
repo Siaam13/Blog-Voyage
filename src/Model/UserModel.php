@@ -2,54 +2,97 @@
 
 namespace App\Model;
 
-
+use App\Entity\User;
 use App\Core\AbstractModel;
 use PDO;
 
-class UserModel extends AbstractModel
-{
+class UserModel extends AbstractModel {
     
-    public function createUser(string $username, string $firstname, string $lastname, string $email, string $country, string $address, string $postal_code, string $password): void
+    public function createUser(User $user): void
     {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
+        $hashedPassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+    
         $sql = 'INSERT INTO users (username, firstname, lastname, email, country, address, postal_code, password) VALUES (:username, :firstname, :lastname, :email, :country, :address, :postal_code, :password)';
-
+    
         $this->db->prepareAndExecute($sql, [
-            'username' => $username,
-            'firstname' => $firstname,
-            'lastname' => $lastname,
-            'email' => $email,
-            'country' => $country,
-            'address' => $address,
-            'postal_code' => $postal_code,
+            'username' => $user->getUsername(),
+            'firstname' => $user->getFirstname(),
+            'lastname' => $user->getLastname(),
+            'email' => $user->getEmail(),
+            'country' => $user->getCountry(),
+            'address' => $user->getAddress(),
+            'postal_code' => $user->getPostalCode(),
             'password' => $hashedPassword,
         ]);
     }
+    public function getUserByUsername(string $username)
+    {
+        $sql = 'SELECT *
+                FROM users
+                WHERE username = :username';
 
-    public function getUserByEmail(string $email): ?array
+        $result = $this->db->getOneResult($sql, ['username' => $username]);
+
+        if (!$result) {
+            return null;
+        }
+
+        return new User($result);
+    }
+
+    public function getUserByEmail(string $email)
+    {
+        $sql = 'SELECT *
+                FROM users
+                WHERE email = :email';
+
+        $result = $this->db->getOneResult($sql, ['email' => $email]);
+
+        if (!$result) {
+            return null;
+        }
+
+        return new User($result);
+    }
+
+    public function getUserById(int $id): ?User
 {
+    $sql = 'SELECT *
+            FROM users
+            WHERE id = :id';
 
-    // var_dump('getUserByEmail called');
-    $stmt = $this->db->getOneResult('SELECT * FROM users WHERE email = :email LIMIT 1');
-    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = $this->db->getOneResult($sql, ['id' => $id]);
 
-    if (!$user) {
+    if (!$result) {
         return null;
     }
 
-    return $user;
+    return new User($result);
 }
 
-public function getUserByUsername(string $username)
+public function updateUser(User $user): void
 {
-    $sql = 'SELECT * FROM users WHERE username = ? LIMIT 1';
-    $values = [$username];
-    $result = $this->db->prepareAndExecute($sql, $values)->fetch();
+    $sql = 'UPDATE users SET username = :username, firstname = :firstname, lastname = :lastname, email = :email, country = :country, address = :address, postal_code = :postal_code';
+    $parameters = [
+        'id' => $user->getId(),
+        'username' => $user->getUsername(),
+        'firstname' => $user->getFirstname(),
+        'lastname' => $user->getLastname(),
+        'email' => $user->getEmail(),
+        'country' => $user->getCountry(),
+        'address' => $user->getAddress(),
+        'postal_code' => $user->getPostalCode(),
+    ];
 
-    return $result;
+    // Mettre à jour le mot de passe uniquement si l'utilisateur a fourni un nouveau mot de passe
+    if (!empty($user->getPassword())) {
+        $sql .= ', password = :password';
+        $parameters['password'] = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+    }
+
+    $sql .= ' WHERE id = :id';
+
+    $this->db->prepareAndExecute($sql, $parameters);
 }
 
 

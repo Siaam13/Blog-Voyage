@@ -1,66 +1,77 @@
 <?php
-// AuthController.php
-namespace App\Controller;
-use App\Model\UserModel;
 
-class AuthController
-{
-    public function displayRegisterForm()
-    {
-        // Affichage : inclure le template
-        $template = 'register';
-        include '../templates/base.phtml';
-    }
+namespace App\Controller;
+
+use App\Model\UserModel;
+use App\Service\UserSession;
+
+class AuthController {
 
     public function login()
     {
-        // Affichage : inclure le template
-        $template = 'login';
-        include '../templates/base.phtml';
-    }
+        $error = null;
 
-    public function processLogin()
-    {
-        // Vérifier si le formulaire a été soumis
+        // Si le formulaire est soumis...
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-            // Récupérer les données du formulaire
+
+            // Récupération des données du formulaire
             $username = $_POST['username'];
             $password = $_POST['password'];
-    
-            // Valider les données (exemple basique)
-            // ...
-    
-            // Vérifier l'identifiant et le mot de passe dans la base de données
-            $userModel = new UserModel();
-            $user = $userModel->getUserByUsername($username);
-            if (!$user || !password_verify($password, $user['password'])) {
-                // Afficher un message d'erreur si l'utilisateur n'existe pas ou si le mot de passe est incorrect
-                $flashMessage = "Le nom d'utilisateur ou le mot de passe est incorrect.";
-                $template = 'login';
-                include '../templates/base.phtml';
+
+            // 1. Est-ce que les identifiants sont corrects ?
+            $user = $this->checkCredentials($username, $password);
+
+            if (!$user) {
+                $error = 'Nom d\'utilisateur ou mot de passe incorrect.';
+            }
+
+            // Identifiants corrects
+            else {
+
+                // 2. Enregistrer l'utilisateur en session
+               $userSession = new UserSession();
+               $userSession->register($user);
+
+                // Message flash de succès
+                $_SESSION['flash'] = 'Content de te revoir ' . $user->getUsername();
+
+                // Redirection vers la page d'accueil
+                header('Location: ' . constructUrl('home'));
                 exit;
             }
-    
-            // Stocker les informations sur l'utilisateur connecté dans les sessions
-            $_SESSION['user'] = [
-                'id' => $user['id'],
-                'username' => $user['username'],
-                'email' => $user['email'],
-                'firstname' => $user['firstname'],
-                'lastname' => $user['lastname']
-            ];
-    
-            // Rediriger l'utilisateur vers la page d'accueil
-            header('Location: ' . constructUrl('home'));
-            exit;
-    
-        } else {
-            // Si la méthode HTTP n'est pas POST, afficher la page de connexion
-            $template = 'login';
-            include '../templates/base.phtml';
-            exit;
         }
+
+        // Affichage du template
+        $template = 'login';
+        include TEMPLATE_DIR . '/base.phtml';
     }
 
+    public function checkCredentials(string $username, string $password)
+    {
+        $userModel = new UserModel();
+        $user = $userModel->getUserByUsername($username);
+
+        if (!$user) {
+            return false;
+        }
+
+        if (!password_verify($password, $user->getPassword())) {
+            return false;
+        }
+
+        return $user;
+    }
+
+    public function logout()
+    {
+        // On efface les données enregistrées en session
+        unset($_SESSION['user']);
+
+        // Message flash
+        $_SESSION['flash'] = 'Bye bye';
+
+        // redirection
+        header('Location: ' . constructUrl('home'));
+        exit;
+    }
 }

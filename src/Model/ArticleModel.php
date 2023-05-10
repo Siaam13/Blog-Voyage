@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Model;
 
@@ -7,50 +7,77 @@ use App\Core\Database;
 use App\Entity\Article;
 use App\Entity\Category;
 
-class ArticleModel extends AbstractModel {
-
+class ArticleModel extends AbstractModel
+{
     /**
      * Sélectionne tous les articles
      */
-    function getAllArticles()
+    public function getAllArticles()
     {
-        $sql = 'SELECT * 
-                FROM article AS A
-                INNER JOIN category AS C 
-                ON A.categoryId = C.idCategory 
-                ORDER BY createdAt DESC 
-                LIMIT 3';
+        $sql = 'SELECT A.idArticle, A.title, A.content, A.image, A.createdAt, C.idCategory, C.name 
+        FROM article AS A
+        INNER JOIN category AS C 
+        ON A.categoryId = C.idCategory 
+        ORDER BY createdAt DESC 
+        LIMIT 3';
+
 
         $results = $this->db->getAllResults($sql);
 
         $articles = [];
+
         foreach ($results as $result) {
-            $result['category'] = new Category($result['categoryId'], $result['name']);
-            $articles[] = new Article($result);
+            $category = new Category($result);
+            $article = new Article($result);
+            $article->setCategory($category);
+            $articles[] = $article;
         }
 
         return $articles;
-    } 
+    }
 
     /**
      * Sélectionne un article à partir de son id
      */
-    function getOneArticle(int $idArticle)
+    public function getOneArticle(int $id)
     {
-        $sql = 'SELECT * 
+        $sql = 'SELECT A.idArticle, A.title, A.content, A.image, A.createdAt, C.idCategory, C.name 
                 FROM article AS A
                 INNER JOIN category AS C 
                 ON A.categoryId = C.idCategory
-                WHERE idArticle = ?'; 
-
-        $result = $this->db->getOneResult($sql, [$idArticle]);
-
+                WHERE A.idArticle = ?';
+    
+        $result = $this->db->getOneResult($sql, [$id]);
+    
         if (!$result) {
             return null;
         }
+    
+        $category = new Category($result);
+        $article = new Article($result);
+        $article->setCategory($category);
+    
+        return $article;
+    }
+    
 
-        $result['category'] = new Category($result['categoryId'], $result['name']);
-        
-        return new Article($result);
+    /**
+     * Ajoute un article
+     */
+    public function addArticle(Article $article)
+    {
+        $sql = 'INSERT INTO article (title, content, categoryId, createdAt)
+                VALUES (?, ?, ?, NOW())';
+
+        return $this->db->insert($sql, [
+            $article->getTitle(),
+            $article->getContent(),
+            $article->getCategory()->getIdCategory()
+        ]);
     }
 }
+
+
+
+
+

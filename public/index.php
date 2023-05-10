@@ -1,7 +1,5 @@
 <?php 
 
-// Démarrage de la session
-session_start();
 
 // Inclusion de l'autoloader de composer
 require '../vendor/autoload.php';
@@ -10,7 +8,14 @@ require '../vendor/autoload.php';
 require '../app/config.php';
 
 // Inclusion des dépendances
+require_once '../src/Controller/UserController.php';
 require_once '../lib/functions.php';
+
+use App\Service\UserSession;
+
+// Démarrage de la session
+session_start();
+
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -23,6 +28,20 @@ $path = explode('?', $path)[0];
 
 if ($path == '') {
     $path = '/';
+}
+
+
+/**
+ * Check Point Pages Admin : est-ce que je suis sur une page réservée à l'administrateur ?
+ * -> ATTENTION : on suppose que toutes les routes de l'admin commencent bien par "/admin"
+ */
+if (strpos($path, '/admin') === 0) {
+    $userSession = new UserSession();
+    if (!$userSession->isAdmin()) {
+        http_response_code(404);
+        echo 'Page introuvable (admin interdit)';
+        exit;
+    }
 }
 
 ////////////////

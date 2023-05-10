@@ -15,16 +15,15 @@
     <h1>Your Travel.fr</h1>
     </div>
     <div class="onglets">
-      <a href="<?=constructUrl('home');?>">Accueil</a>
-      <a href="#">Catégories</a>
-      <?php if((new App\Service\UserSession())->getUser()):?>
-      <a href="<?= constructUrl('my-account') ?>">Mon compte</a>
-      <a href="<?=constructUrl('logout');?>">Déconnexion</a>
-    <?php else: ?>
-      <a href="<?=constructUrl('signup');?>">Inscription</a>
-      <a href="<?=constructUrl('login');?>">Connexion</a>
-    <?php endif; ?>
-    <a href="<?=constructUrl('contact');?>">Contact</a>
+    <?php $userSession = new App\Service\UserSession(); ?>
+<?php if ($userSession->getUser() && $userSession->isAdmin()): ?>
+    <a href="<?= constructUrl('admin_dashboard'); ?>">Administration</a>
+    <a href="<?= constructUrl('logout'); ?>">Déconnexion</a>
+<?php else: ?>
+    <a href="<?= constructUrl('signup'); ?>">Inscription</a>
+    <a href="<?= constructUrl('login'); ?>">Connexion</a>
+<?php endif; ?>
+
 
     </div>
   </nav>
@@ -39,7 +38,7 @@
 
       <!-- Contenu de la page --> 
 
-      <?php include TEMPLATE_DIR . '/' . $template . '.phtml'; ?>
+      <?php include TEMPLATE_DIR . '/admin/' . $template . '.phtml'; ?>
 
 
 

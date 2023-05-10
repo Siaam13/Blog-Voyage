@@ -23,15 +23,21 @@ $routes = [
         'method' => 'sendForm'
     ],
 
-    'register' => [
-        'path' => '/register',
-        'controller' => 'AuthController',
-        'method' => 'displayRegisterForm'
-    ],
-    'process-register' => [
-        'path' => '/process-register',
-        'controller' => 'RegisterController',
-        'method' => 'processRegister'
+    // 'register' => [
+    //     'path' => '/register',
+    //     'controller' => 'AuthController',
+    //     'method' => 'displayRegisterForm'
+    // ],
+    // 'process-register' => [
+    //     'path' => '/process-register',
+    //     'controller' => 'RegisterController',
+    //     'method' => 'processRegister'
+    // ],
+    
+    'signup' => [
+        'path' => '/signup',
+        'controller' => 'UserController',
+        'method' => 'signup'
     ],
 
     'login' => [
@@ -40,15 +46,33 @@ $routes = [
         'method' => 'login'
     ],
 
-    'process-login' => [
-        'path' => '/process-login',
-        'controller' => 'AuthController',
-        'method' => 'processLogin'
+    'my-account' => [
+        'path' => '/my-account',
+        'controller' => 'UserController',
+        'method' => 'myAccount'
+    ],
+
+    'update' => [
+        'path' => '/my-account/update',
+        'controller' => 'UserController',
+        'method' => 'update'
+    ],
+
+
+    'admin_dashboard' => [
+        'path' => '/admin',
+        'controller' => 'Admin\\AdminDashboardController',
+        'method' => 'index'
+    ],
+    'admin_article_new' => [
+        'path' => '/admin/article/new',
+        'controller' => 'Admin\\AdminArticleController',
+        'method' => 'new'
     ],
 
     'logout' => [
         'path' => '/logout',
-        'controller' => 'LogoutController',
+        'controller' => 'AuthController',
         'method' => 'logout'
     ],
     

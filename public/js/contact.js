@@ -21,11 +21,8 @@ function onSubmitForm(event)
         return response.json();
     })
     .then(function(data) {
-        console.log(data)
-    })
-
-
-    // On efface les précédents messages d'erreurs
+        // console.log(data)
+           // On efface les précédents messages d'erreurs
     document.querySelectorAll('p.error').forEach(error => error.remove());
     document.querySelector('p.succes')?.remove();
 
@@ -39,18 +36,16 @@ function onSubmitForm(event)
             input.after(p);
         }
     }
-
-
     else if (data.success) {
         const p = document.createElement('p');
         p.textContent = data.success;
         p.classList.add('succes');
-        form.before('p');
+        form.before(p);
         form.reset();
         
     }
+    })
 }
-
     
 
 
