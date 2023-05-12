@@ -216,3 +216,27 @@ label {
   cursor: pointer;
 }
 
+/* -------------------------------------------------------------------------------------------------------------------------------------------- */
+                                                               /* Add Article */
+
+.form-add {
+display: flex;
+flex-direction: column;
+width: 40%;
+
+}
+
+#btn-add {
+margin-top: 15px;
+background-color: #ff623087;
+border: none;
+box-shadow: 5px 4px 10px #0000005c;
+padding: 10px;
+transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#btn-add:hover {
+color: white;
+transform: scale(1.05);
+cursor: pointer;
+}

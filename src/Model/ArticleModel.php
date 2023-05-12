@@ -15,26 +15,25 @@ class ArticleModel extends AbstractModel
     public function getAllArticles()
     {
         $sql = 'SELECT A.idArticle, A.title, A.content, A.image, A.createdAt, C.idCategory, C.name 
-        FROM article AS A
-        INNER JOIN category AS C 
-        ON A.categoryId = C.idCategory 
-        ORDER BY createdAt DESC 
-        LIMIT 3';
-
-
+                FROM article AS A
+                INNER JOIN category AS C 
+                ON A.categoryId = C.idCategory 
+                ORDER BY createdAt DESC';
+    
         $results = $this->db->getAllResults($sql);
-
+    
         $articles = [];
-
+    
         foreach ($results as $result) {
             $category = new Category($result);
             $article = new Article($result);
             $article->setCategory($category);
             $articles[] = $article;
         }
-
+    
         return $articles;
     }
+    
 
     /**
      * Sélectionne un article à partir de son id
@@ -66,18 +65,38 @@ class ArticleModel extends AbstractModel
      */
     public function addArticle(Article $article)
     {
-        $sql = 'INSERT INTO article (title, content, categoryId, createdAt)
-                VALUES (?, ?, ?, NOW())';
+        $sql = 'INSERT INTO article (title, content, categoryId, image, createdAt)
+        VALUES (?,?,?,?, NOW())';
 
-        return $this->db->insert($sql, [
-            $article->getTitle(),
-            $article->getContent(),
-            $article->getCategory()->getIdCategory()
-        ]);
-    }
+    return $this->db->insert($sql, [
+        $article->getTitle(),
+        $article->getContent(),
+        $article->getCategory()->getIdCategory(),
+        $article->getImage()
+    ]);
+}
+
+public function updateArticle(Article $article)
+{
+    $sql = 'UPDATE article SET title = ?, content = ?, categoryId = ?, image = ? WHERE idArticle = ?';
+
+    return $this->db->update($sql, [
+        $article->getTitle(),
+        $article->getContent(),
+        $article->getCategory()->getIdCategory(),
+        $article->getImage(),
+        $article->getIdArticle()
+    ]);
+}
+
+public function deleteArticle(Article $article)
+{
+    $sql = 'DELETE FROM article WHERE idArticle = ?';
+    $this->db->delete($sql, [$article->getIdArticle()]);
 }
 
 
 
+}
 
 

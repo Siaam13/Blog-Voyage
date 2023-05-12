@@ -70,7 +70,7 @@ class UserModel extends AbstractModel {
     return new User($result);
 }
 
-public function updateUser(User $user): void
+public function updateUser(User $user , bool $changePassword = false): void
 {
     $sql = 'UPDATE users SET username = :username, firstname = :firstname, lastname = :lastname, email = :email, country = :country, address = :address, postal_code = :postal_code';
     $parameters = [
@@ -85,7 +85,7 @@ public function updateUser(User $user): void
     ];
 
     // Mettre à jour le mot de passe uniquement si l'utilisateur a fourni un nouveau mot de passe
-    if (!empty($user->getPassword())) {
+    if ($changePassword) {
         $sql .= ', password = :password';
         $parameters['password'] = password_hash($user->getPassword(), PASSWORD_DEFAULT);
     }

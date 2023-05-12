@@ -1,0 +1,34 @@
+<!-- manage_articles.phtml -->
+
+<h2>Gérer les articles</h2>
+
+<?php if (!empty($articles)): ?>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Catégorie</th>
+                <th>Date de création</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($articles as $article): ?>
+                <tr>
+                    <td><?= $article->getIdArticle(); ?></td>
+                    <td><?= $article->getTitle(); ?></td>
+                    <td><?= $article->getCategory()->getName(); ?></td>
+                    <td><?= $article->getCreatedAt()->format('d/m/Y'); ?></td>
+                    <td>
+                        <a href="<?= constructUrl('admin_article_update', ['id' => $article->getIdArticle()]); ?>">Modifier</a>
+                        <a href="<?= constructUrl('admin_article_delete', ['id' => $article->getIdArticle()]); ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">Supprimer</a>
+                    </td>
+        
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>Aucun article trouvé.</p>
+<?php endif; ?>

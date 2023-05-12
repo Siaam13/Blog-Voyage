@@ -130,7 +130,7 @@ class User {
         return $this->postal_code;
     }
 
-    public function setPostalCode(string $postal_code): self
+    public function setPostal_code(string $postal_code): self
     {
         $this->postal_code = $postal_code;
         return $this;

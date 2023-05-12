@@ -111,12 +111,22 @@ private function validateForm(
     // On initialise un tableau, on stockera les messages d'erreur dedans
     $errors = [];
 
+
     // Si le champ "username" n'est pas rempli...
     if(!$username) {
         $errors['username'] = 'Veuillez remplir le champ "Nom d\'utilisateur"';
-    } elseif ($this->userModel->getUserByUsername($username)) {
+    } else{
+        $userSession = new UserSession;
+        $user = $this->userModel->getUserByUsername($username); 
+        if($user && $user->getId()!=$userSession->getUser()->getId()){
+            
         $errors['username'] = 'Un compte existe déjà avec ce nom d\'utilisateur';
-    }
+
+        }
+        
+
+    } 
+    
 
     // Si le champ "firstname" n'est pas rempli...
     if(!$firstname) {
@@ -133,8 +143,14 @@ private function validateForm(
             $errors['email'] = 'Veuillez remplir le champ "Email"';
         } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             $errors['email'] = 'Veuillez remplir un email valide';
-        } elseif($this->userModel->getUserByEmail($email)) {
-            $errors['email'] = 'Un compte existe déjà avec cet email';
+        } else {
+            $user = $this->userModel->getUserByEmail($email);
+            if($user && $user->getId()!=$userSession->getUser()->getId()){
+            
+                $errors['email'] = 'Un compte existe déjà avec cet email';
+        
+                }
+          
         }
     
         // Validation du champ "country"
@@ -153,11 +169,13 @@ private function validateForm(
         }
     
         // Validation du champ "password"
+        if($password) {
         if(strlen($password) < 8) {
             $errors['password'] = 'Le mot de passe doit comporter au moins 8 caractères';
         } elseif ($password != $passwordConfirm) {
             $errors['password-confirm'] = 'La confirmation ne correspond pas';
         }
+    }
     
         // On retourne le tableau d'erreurs
         return $errors;
@@ -167,13 +185,10 @@ private function validateForm(
     {
         // Vérifier que l'utilisateur est connecté
         $userSession = new UserSession();
-        if (!$userSession->getUser()) {
+        if (!$user = $userSession->getUser()) {
             header('Location: ' . constructUrl('login'));
             exit;
         }
-    
-        // Récupérer l'utilisateur depuis la session
-        $user = $userSession->getUser();
     
         // Affichage du template
         $template = 'my-account';
@@ -193,6 +208,8 @@ public function update()
     // Récupération des données de l'utilisateur connecté
     $userId = $_SESSION['user']->getId();
     $user = $this->userModel->getUserById($userId);
+    
+    
 
     // Si le formulaire est soumis
     if (!empty($_POST)) {
@@ -220,21 +237,11 @@ public function update()
             $postal_code,
             $password,
             $passwordConfirm
+
+
         );
 
-        // Si il n'y a pas d'erreur... 
-        if(empty($errors)) {
-
-            // Vérifier si l'utilisateur existe déjà avec cet email ou ce nom d'utilisateur
-            $userByUsername = $this->userModel->getUserByUsername($username);
-            if ($userByUsername && $userByUsername->getId() != $userId) {
-                $errors['username'] = 'Ce nom d\'utilisateur existe déjà';
-            }
-
-            $userByEmail = $this->userModel->getUserByEmail($email);
-            if ($userByEmail && $userByEmail->getId() != $userId) {
-                $errors['email'] = 'Un compte existe déjà avec cet email';
-            }
+    
 
             // Si l'utilisateur n'existe pas encore
             if (empty($errors)) {
@@ -246,15 +253,23 @@ public function update()
                     ->setEmail($email)
                     ->setCountry($country)
                     ->setAddress($address)
-                    ->setPostalCode($postal_code);
+                    ->setPostal_code($postal_code);
 
+                    $changePassword = false;
                 // Mettre à jour le mot de passe s'il a été renseigné
                 if (!empty($password)) {
+                    $changePassword = true;
                     $user->setPassword($password);
                 }
 
                 // Mettre à jour l'utilisateur dans la base de données
-                $this->userModel->updateUser($user);
+                $this->userModel->updateUser($user , $changePassword);
+                // Mise a jours Session
+                $userSession = new UserSession();
+                $userSession->register($user);
+
+
+                
 
                 // Ajout d'un message flash en session
                 $_SESSION['flash'] = 'Vos informations ont été mises à jour.';
@@ -266,10 +281,9 @@ public function update()
 
         }
 
-    }
 
     // Affichage du template
-    $template = 'my-account';
+    $template = 'my-account-update';
     include TEMPLATE_DIR . '/base.phtml';
 }
 

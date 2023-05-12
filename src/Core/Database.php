@@ -69,12 +69,13 @@ class Database {
      * Exécute une requête de sélection et retourne TOUS les résultats
      */
     function getAllResults(string $sql, array $values = [])
-    {
-        $pdoStatement = $this->prepareAndExecute($sql, $values);
-        $results = $pdoStatement->fetchAll();
+{
+    $pdoStatement = $this->prepareAndExecute($sql, $values);
+    $results = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
 
-        return $results;
-    }
+    return $results;
+}
+
 
     function lastInsertId()
     {
@@ -87,7 +88,31 @@ class Database {
 
         return $this->lastInsertId();
    
+    }
+
+
+public function update(string $sql, array $params = []): int
+{
+    $statement = $this->pdo->prepare($sql);
+
+    foreach ($params as $name => $value) {
+        $statement->bindValue($name, $value);
+    }
+
+    $statement->execute();
+
+    return $statement->rowCount();
+
+    }
+
+
+    public function delete(string $sql, array $params = [])
+{
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
 }
+
+
 
 }
 

@@ -62,13 +62,40 @@ $routes = [
     'admin_dashboard' => [
         'path' => '/admin',
         'controller' => 'Admin\\AdminDashboardController',
-        'method' => 'index'
+        'method' => 'dashboard'
     ],
     'admin_article_new' => [
         'path' => '/admin/article/new',
         'controller' => 'Admin\\AdminArticleController',
         'method' => 'new'
     ],
+    'admin_article_update' => [
+        'path' => '/admin/article/update',
+        'controller' => 'Admin\\AdminArticleController',
+        'method' => 'update' 
+    ],
+
+    'admin_article_delete' => [
+        'path' => '/admin/article/delete',
+        'controller' => 'Admin\\AdminArticleController',
+        'method' => 'delete'
+    ],
+
+    'admin_manage_articles' => [
+        'path' => '/admin/articles',
+        'controller' => 'Admin\\AdminArticleController',
+        'method' => 'indexEdit'
+    ],
+
+    // 'admin_article_index' => [
+    //     'path' => '/admin/article',
+    //     'controller' => 'Admin\\AdminArticleController',
+    //     'method' => 'indexEdit'
+    // ],
+
+
+    
+    
 
     'logout' => [
         'path' => '/logout',
