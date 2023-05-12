@@ -5,6 +5,7 @@ namespace App\Core;
 
 // 2. Import de classes
 use PDO;
+use App\Entity\Article;
 
 // 3. Définition de la classe Database
 class Database {
@@ -93,17 +94,27 @@ class Database {
 
 public function update(string $sql, array $params = []): int
 {
-    $statement = $this->pdo->prepare($sql);
-
-    foreach ($params as $name => $value) {
-        $statement->bindValue($name, $value);
-    }
-
-    $statement->execute();
+    $statement = $this->prepareAndExecute($sql , $params);
 
     return $statement->rowCount();
 
     }
+
+    // public function updateArticle(Article $article)
+    // {
+    //     $sql = 'UPDATE article SET title = ?, content = ?, categoryId = ?, image = ? WHERE idArticle = ?';
+    
+    //     return $this->pdo->update($sql, [
+    //         $article->getTitle(),
+    //         $article->getContent(),
+    //         $article->getCategory()->getIdCategory(),
+    //         $article->getImage(),
+    //         $article->getIdArticle()
+    //     ]);
+    // }
+    
+    
+    
 
 
     public function delete(string $sql, array $params = [])

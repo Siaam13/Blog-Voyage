@@ -1,32 +1,35 @@
 <h1>Modifier l'article</h1>
 
-<div class="article">
-      <div class="left">
-      <?php if ($article->getImage()): ?>
-                <img src="<?=asset('images/' . $article->getImage())?>" alt="">
-            <?php endif; ?>
+<div class="article-container">
+  <div class="article-image">
+    <?php if ($article->getImage()): ?>
+      <img src="<?=asset('images/' . $article->getImage())?>" alt="">
+    <?php endif; ?>
+  </div>
+  <div class="article-form">
+    <!-- Formulaire de modification de l'article -->
+    <form action="<?= constructUrl('admin_article_update', ['id' => $article->getIdArticle()]) ?>" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="title">Titre</label>
+        <input type="text" class="form-control" id="title" name="title" value="<?= $article->getTitle() ?>">
       </div>
-      <div class="right">
-      <small class="date"></small>Créé le <?=$article->getFormattedCreatedAt();?></small>
-      <small class="category-title">   | |   <?=$article->getCategoryName();?></small>
-        <h3><?=$article->getTitle();?></h3>
-        <p class="card-text"><?=$article->getContent();?></p>
-        
+      <div class="form-group">
+        <label for="content">Contenu</label>
+        <textarea class="form-control" id="content" name="content" rows="10"><?= $article->getContent() ?></textarea>
       </div>
-        <!-- Formulaire de modification de l'article -->
-        <form method="post" action="<?= constructUrl('admin_article_update', ['id' => $article->getIdArticle()]) ?>">
-            <!-- Champs de saisie pour les attributs de l'article (titre, contenu, etc.) -->
-            <div class="form-group">
-                <label for="title">Titre</label>
-                <input type="text" class="form-control" id="title" name="title" value="<?= $article->getTitle() ?>">
-            </div>
-            <div class="form-group">
-                <label for="content">Contenu</label>
-                <textarea class="form-control" id="content" name="content"><?= $article->getContent() ?></textarea>
-            </div>
-            <!-- Autres champs de saisie pour les attributs de l'article -->
-            <!-- ... -->
-            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-        </form>
-    </div>
+      <div class="form-group">
+        <label for="category">Catégorie</label>
+        <select class="form-control" id="category" name="category">
+          <?php foreach ($categories as $category) : ?>
+            <option value="<?= $category->getIdCategory() ?>" <?= ($category->getIdCategory() == $article->getCategory()->getIdCategory()) ? 'selected' : '' ?>><?= $category->getName() ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" class="form-control-file" id="image" name="image">
+      </div>
+      <button type="submit" id="btn-update">Enregistrer les modifications</button>
+    </form>
+  </div>
 </div>

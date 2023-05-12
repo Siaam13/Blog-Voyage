@@ -264,6 +264,7 @@ public function update()
 
                 // Mettre à jour l'utilisateur dans la base de données
                 $this->userModel->updateUser($user , $changePassword);
+                
                 // Mise a jours Session
                 $userSession = new UserSession();
                 $userSession->register($user);

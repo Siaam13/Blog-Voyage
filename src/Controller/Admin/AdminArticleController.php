@@ -126,48 +126,70 @@ class AdminArticleController {
 
 
 
-    public function updateArticle(Article $article)
-{
-    $sql = 'UPDATE article SET title = ?, content = ?, categoryId = ?, image = ? WHERE idArticle = ?';
-
-    return $this->db->update($sql, [
-        $article->getTitle(),
-        $article->getContent(),
-        $article->getCategory()->getIdCategory(),
-        $article->getImage(),
-        $article->getIdArticle()
-    ]);
-}
-
 
 
 
     public function update()
-{
-
-       // Validation du paramètre id de l'URL
-       if (!array_key_exists('id', $_GET) || !$_GET['id'] || !ctype_digit($_GET['id'])) {
-        http_response_code(404);
-        echo 'Article introuvable';
-        exit; // Fin de l'exécution du script PHP
+    {
+        // Validation du paramètre id de l'URL
+        if (!array_key_exists('id', $_GET) || !$_GET['id'] || !ctype_digit($_GET['id'])) {
+            http_response_code(404);
+            echo 'Article introuvable';
+            exit; // Fin de l'exécution du script PHP
+        }
+    
+        $id = $_GET['id'];
+        $articleModel = new ArticleModel();
+        $article = $articleModel->getOneArticle($id);
+    
+        // Vérifier si l'article existe
+        if (!$article) {
+            throw new Exception("Cet article n'existe pas.");
+        }
+    
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAllCategories();
+    
+        // Si le formulaire est soumis
+        if (!empty($_POST)) {
+            // Récupérer les données du formulaire
+            $title = trim(strip_tags($_POST['title']));
+            $content = trim(strip_tags($_POST['content']));
+            $categoryId = (int) $_POST['category'];
+    
+            // Valider les données
+            $errors = [];
+    
+            if (!$title) {
+                $errors['title'] = 'Le champ "titre" est obligatoire';
+            }
+    
+            if (!$content) {
+                $errors['content'] = 'Le champ "contenu" est obligatoire';
+            }
+    
+            // Mettre à jour l'article si les données sont valides
+            if (empty($errors)) {
+                $article->setTitle($title);
+                $article->setContent($content);
+                $article->setCategory($categoryModel->getCategoryById($categoryId));
+    
+                $articleModel->updateArticle($article);
+    
+                // Ajout d'un message flash en session
+                $_SESSION['flash'] = 'Article mis à jour avec succès.';
+    
+                // Redirection
+                header('Location: ' . constructUrl('admin_manage_articles'));
+                exit;
+            }
+        }
+    
+        // Affichage du template d'édition avec les données de l'article
+        $template = 'article_update';
+        include TEMPLATE_DIR . '/admin/base_admin.phtml';
     }
 
-    $id = $_GET['id'];
-    $articleModel = new ArticleModel();
-    $article = $articleModel->getOneArticle($id);
-
-    // Vérifier si l'article existe
-    if (!$article) {
-        throw new Exception("Cet article n'existe pas.");
-    }
-
-    $categoryModel = new CategoryModel();
-    $categories = $categoryModel->getAllCategories();
-
-    // Affichage du template d'édition avec les données de l'article
-    $template = 'article_update';
-    include TEMPLATE_DIR . '/admin/base_admin.phtml';
-}
 
 public function delete()
 {
