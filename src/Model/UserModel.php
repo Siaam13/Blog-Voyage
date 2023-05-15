@@ -10,7 +10,7 @@ class UserModel extends AbstractModel {
     
     public function createUser(User $user): void
     {
-        $hashedPassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+        // $hashedPassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
     
         $sql = 'INSERT INTO users (username, firstname, lastname, email, country, address, postal_code, password) VALUES (:username, :firstname, :lastname, :email, :country, :address, :postal_code, :password)';
     
@@ -22,7 +22,7 @@ class UserModel extends AbstractModel {
             'country' => $user->getCountry(),
             'address' => $user->getAddress(),
             'postal_code' => $user->getPostalCode(),
-            'password' => $hashedPassword,
+            'password' => $user->getPassword(),
         ]);
     }
     public function getUserByUsername(string $username)

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\UserModel;
+use App\Controller\UserController;
 use App\Service\UserSession;
 
 class AuthController {
@@ -26,19 +27,19 @@ class AuthController {
             }
 
             // Identifiants corrects
-            else {
+        else {
 
-                // 2. Enregistrer l'utilisateur en session
-               $userSession = new UserSession();
-               $userSession->register($user);
+            // 2. Enregistrer l'utilisateur en session
+            $userSession = new UserSession();
+            $userSession->register($user);
 
-                // Message flash de succès
-                $_SESSION['flash'] = 'Content de te revoir ' . $user->getUsername();
+            // Message flash de succès
+            $_SESSION['flash'] = 'Content de te revoir ' . $user->getUsername();
 
-                // Redirection vers la page d'accueil
-                header('Location: ' . constructUrl('home'));
-                exit;
-            }
+            // Redirection vers la page d'accueil
+            header('Location: ' . constructUrl('home'));
+            exit;
+        }
         }
 
         // Affichage du template
@@ -54,7 +55,7 @@ class AuthController {
         if (!$user) {
             return false;
         }
-
+        var_dump(password_verify($password, $user->getPassword()));
         if (!password_verify($password, $user->getPassword())) {
             return false;
         }

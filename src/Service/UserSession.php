@@ -26,8 +26,13 @@ class UserSession {
 
     public function getUser()
     {
-        return $_SESSION[self::SESSION_KEY] ?? null;
+        if (isset($_SESSION[self::SESSION_KEY])) {
+            return $_SESSION[self::SESSION_KEY];
+        }
+        
+        return null;
     }
+    
 
     public function isAdmin(): bool 
     {
