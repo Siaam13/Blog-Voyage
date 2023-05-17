@@ -12,37 +12,33 @@
         <p class="card-text"><?=$article->getContent();?></p>
         
       </div>
-
-      <div class="comment">
+      <?php if ($isLoggedIn): ?>
+    <div class="comment">
         <h2>Commentaires</h2>
-        <form action="<?=constructUrl('article', ['id' => $idArticle])?>" method="POST">
+        <form action="<?= constructUrl('article', ['id' => $idArticle]) ?>" method="POST">
             <fieldset>
                 <legend>Ajouter un commentaire</legend>
+                <input type="hidden" name="userId" value="<?= $currentUserId ?>">
                 <div>
-                    <label for="nickname">Pseudo</label>
-                    <input type="text" id="nickname" name="nickname">
-                    <?php if(isset($erros['nickname'])): ?>
-                        <p class="error"><?=$errors['content']?></p>
-                <?php endif; ?> 
+                    <label for="content">Commentaire</label>
+                    <textarea id="content" name="content"></textarea>
                 </div>
-                <div>
-                <label for="content">Commentaire</label>
-                <textarea id="content" name="content"></textarea>
-            </div>
-            <input type="submit" value="Valider">
+                <input type="submit" value="Valider">
             </fieldset>
         </form>
 
-
-        <?php if(empty($comments)): ?>
-        <p>Soyez le premier à ajouter un commentaire !</p>
-    <?php else: ?>
-        <?php foreach ($comments as $comment): ?>
-            <div>
-                <h3>Ajouté par <?=$comment->getNickname();?> le <?=$comment->getFormattedCreatedAt();?></h3>
-                <p><?=$comment->getContent();?></p>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
-
-      </div>
+        <?php if (empty($comments)): ?>
+            <p>Soyez le premier à ajouter un commentaire !</p>
+        <?php else: ?>
+            <?php foreach ($comments as $comment): ?>
+                <div>
+                    <h3>Ajouté par <?= $comment->getUsername(); ?> le <?= $comment->getFormattedCreatedAt(); ?></h3>
+                    <p><?= $comment->getContent(); ?></p>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+<?php else: ?>
+    <p>Connectez-vous pour ajouter un commentaire.</p>
+<?php endif; ?>
+</div>

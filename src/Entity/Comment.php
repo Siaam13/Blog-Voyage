@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Entity;
 
@@ -7,7 +7,8 @@ use DateTimeImmutable;
 class Comment {
 
     private int $idComment;
-    private string $nickname;
+    private int $userId; // Nouvelle propriété pour l'ID de l'utilisateur
+    private string $username;
     private DateTimeImmutable $createdAt;
     private string $content;
     private int $articleId;
@@ -41,19 +42,37 @@ class Comment {
     }
 
     /**
+     * Get the value of userId
+     */
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set the value of userId
+     */
+    public function setUserId(int $userId): self
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
      * Get the value of nickname
      */
-    public function getNickname(): string
+    public function getUsername(): string
     {
-        return $this->nickname;
+        return $this->username;
     }
 
     /**
      * Set the value of nickname
      */
-    public function setNickname(string $nickname): self
+    public function setUsername(string $username): self
     {
-        $this->nickname = $nickname;
+        $this->username = $username;
 
         return $this;
     }
@@ -117,7 +136,7 @@ class Comment {
     }
 
     /**
-     * Retourne la date de création de l'article formattée 
+     * Retourne la date de création de l'article formatée
      */
     public function getFormattedCreatedAt(): string 
     {
