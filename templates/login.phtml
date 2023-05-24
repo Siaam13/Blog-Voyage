@@ -1,5 +1,5 @@
 <!-- login.phtml -->
-<h2> Connexion :</h2>
+<h1> Connexion :</h1>
 
 <?php if($error != null) : ?>
     <p><?=$error;?></p>
@@ -12,5 +12,5 @@
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="password" required>
     
-    <button type="submit">Se connecter</button>
+    <button id="btn-register" type="submit">Se connecter</button>
 </form>

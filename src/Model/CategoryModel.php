@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Core\AbstractModel;
 use App\Entity\Category;
+use App\Model\CategoryModel;
 
 class CategoryModel extends AbstractModel 
 {

@@ -6,6 +6,7 @@
   <title>Blog - YourTravel.fr </title>
   <link rel="stylesheet" href="<?=asset('css/style.css');?>">
   <link rel="icon" href="<?=asset('images/Yourtravel.fr.logo.png');?>" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,700;1,300&family=Galada&family=Lemon&family=Prompt:wght@200;400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"/>
 </head>
 <body>
@@ -14,7 +15,7 @@
     <img src="<?=asset('images/Yourtravel.fr.logo.png');?>">
     <h1>Your Travel.fr</h1>
     </div>
-    <div class="onglets">
+    <div class="navbar-links">
     <?php $userSession = new App\Service\UserSession(); ?>
 <?php if ($userSession->getUser() && $userSession->isAdmin()): ?>
     <a href="<?= constructUrl('admin_dashboard'); ?>">Administration</a>

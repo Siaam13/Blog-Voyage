@@ -1,0 +1,11 @@
+<h1>Liste des catégories</h1>
+
+
+<div class="category-list">
+    <?php foreach ($categories as $category): ?>
+        <div class="category">
+            <h2><?= $category->getName(); ?></h2>
+            <!-- Autres informations de la catégorie -->
+        </div>
+    <?php endforeach; ?>
+</div>

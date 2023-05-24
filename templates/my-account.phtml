@@ -9,5 +9,11 @@
     <li>Adresse : <?= $user->getAddress() ?></li>
     <li>Code postal : <?= $user->getPostalCode() ?></li>
 </ul>
-
-<a href="<?= constructUrl('update')?>">Modifier</a>
+<button class="btn-next">       
+    <a href="<?= constructUrl('update')?>">Modifier</a>
+    <span class="arrow">
+    <i class="fas fa-chevron-right"></i>
+    <i class="fas fa-chevron-right"></i>
+    <i class="fas fa-chevron-right"></i>
+    </span>
+</button> 

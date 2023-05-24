@@ -1,6 +1,21 @@
 <h1>Dashboard</h1>
 
 <div class="onglet-admin">
-<a href="<?=constructUrl('admin_article_new');?>" class="btn btn-primary">Ajouter un article</a>
-<a href="<?= constructUrl('admin_manage_articles');?>" class="btn btn-primary">Gérer les articles</a>
+<button class="btn-next">       
+         <a href="<?=constructUrl('admin_article_new');?>" class="btn btn-primary">Ajouter un article</a>
+         <span class="arrow">
+
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-chevron-right"></i>
+         </span>
+        
+         <button class="btn-next">       
+         <a href="<?= constructUrl('admin_manage_articles');?>" class="btn btn-primary">Gérer les articles</a>
+         <span class="arrow">
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-chevron-right"></i>
+</button>
+
 </div>

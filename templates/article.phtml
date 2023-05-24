@@ -6,8 +6,8 @@
             <?php endif; ?>
       </div>
       <div class="right">
-      <small class="date"></small>Créé le <?=$article->getFormattedCreatedAt();?></small>
-      <small class="category-title">   | |   <?=$article->getCategoryName();?></small>
+      <p class="date">Créé le <?=$article->getFormattedCreatedAt();?>   | |   </small>
+      <small class="category-title"><?=$article->getCategoryName();?></small>
         <h3><?=$article->getTitle();?></h3>
         <p class="card-text"><?=$article->getContent();?></p>
         
@@ -17,13 +17,13 @@
         <h2>Commentaires</h2>
         <form action="<?= constructUrl('article', ['id' => $idArticle]) ?>" method="POST">
             <fieldset>
-                <legend>Ajouter un commentaire</legend>
+                <legend> Ajouter un commentaire </legend>
                 <input type="hidden" name="userId" value="<?= $currentUserId ?>">
-                <div>
-                    <label for="content">Commentaire</label>
+                <div class="comment-content">
+                    <label for="content">Commentaire :</label>
                     <textarea id="content" name="content"></textarea>
                 </div>
-                <input type="submit" value="Valider">
+                <input id="btn-comment" type="submit" value="Valider">
             </fieldset>
         </form>
 

@@ -23,16 +23,12 @@ $routes = [
         'method' => 'sendForm'
     ],
 
-    // 'register' => [
-    //     'path' => '/register',
-    //     'controller' => 'AuthController',
-    //     'method' => 'displayRegisterForm'
-    // ],
-    // 'process-register' => [
-    //     'path' => '/process-register',
-    //     'controller' => 'RegisterController',
-    //     'method' => 'processRegister'
-    // ],
+    'category' => [
+        'path' => '/category',
+        'controller' => 'CategoryController',
+        'method' => 'index'
+    ],
+  
     
     'signup' => [
         'path' => '/signup',

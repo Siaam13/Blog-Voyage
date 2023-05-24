@@ -6,14 +6,22 @@
             <?php endif; ?>
       </div>
       <div class="right">
-      <small class="date"></small>Créé le <?=$article->getFormattedCreatedAt();?></small>
+      <p class="date"></small>Créé le <?=$article->getFormattedCreatedAt();?></p>
         <h3><?=$article->getTitle();?></h3>
 
         <div class="article-category"><?=$article->getCategoryName();?></div>
 
         <p class="card-text"><?=mb_substr($article->getContent(), 0, 200)?> [...]</p>
-                  
-         <a class="btn-next" href="<?=constructUrl('article', ['id' => $article->getIdArticle()]);?>">Lire la suite</a>
+
+        <button class="btn-next">       
+         <a href="<?=constructUrl('article', ['id' => $article->getIdArticle()]);?>">Lire la suite</a>
+         <span class="arrow">
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-chevron-right"></i>
+          <i class="fas fa-chevron-right"></i>
+         </span>
+
+        </button> 
       </div>
       <?php endforeach; ?>
     </div> 
