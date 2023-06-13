@@ -1,11 +1,11 @@
 <!-- login.phtml -->
-<h1> Connexion :</h1>
+<h1>Connexion :</h1>
 
 <?php if($error != null) : ?>
-    <p><?=$error;?></p>
+    <p><?=htmlspecialchars($error);?></p>
 <?php endif; ?>
 
-<form id="login-form" action="<?= constructUrl('login') ?>" method="POST">
+<form id="login-form" action="<?=htmlspecialchars(constructUrl('login'))?>" method="POST">
     <label for="username">Nom d'utilisateur :</label>
     <input type="text" id="username" name="username" required>
     

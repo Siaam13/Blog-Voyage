@@ -1,6 +1,6 @@
 <!-- manage_articles.phtml -->
 
-<h2>Gérer les articles</h2>
+<h1>Gérer les articles</h1>
 
 <?php if (!empty($articles)): ?>
     <table>
@@ -21,8 +21,8 @@
                     <td><?= $article->getCategory()->getName(); ?></td>
                     <td><?= $article->getCreatedAt()->format('d/m/Y'); ?></td>
                     <td>
-                        <a href="<?= constructUrl('admin_article_update', ['id' => $article->getIdArticle()]); ?>">Modifier</a>
-                        <a href="<?= constructUrl('admin_article_delete', ['id' => $article->getIdArticle()]); ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">Supprimer</a>
+                        <a id="admin-update" href="<?= constructUrl('admin_article_update', ['id' => $article->getIdArticle()]); ?>">Modifier</a>
+                        <a id="admin-delete" href="<?= constructUrl('admin_article_delete', ['id' => $article->getIdArticle()]); ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">Supprimer</a>
                     </td>
         
                 </tr>

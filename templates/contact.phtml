@@ -3,7 +3,7 @@
 <h1>Contactez-nous</h1>
 <p>Une Question ? Contactez nous directement !</p>
 
-<form  action="<?=constructUrl('ajax-send-contact-form')?>" method="POST" id="contact-form">
+<form action="<?=htmlspecialchars(constructUrl('ajax-send-contact-form'))?>" method="POST" id="contact-form">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
     
@@ -18,4 +18,4 @@
 
 </section>
 
-<script src="<?=asset('js/contact.js');?>"></script>
+<script src="<?=htmlspecialchars(asset('js/contact.js'))?>"></script>

@@ -55,7 +55,7 @@ class AuthController {
         if (!$user) {
             return false;
         }
-        var_dump(password_verify($password, $user->getPassword()));
+        // var_dump(password_verify($password, $user->getPassword()));
         if (!password_verify($password, $user->getPassword())) {
             return false;
         }

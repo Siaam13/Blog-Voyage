@@ -89,15 +89,22 @@ $routes = [
     //     'method' => 'indexEdit'
     // ],
 
-
-    
-    
-
     'logout' => [
         'path' => '/logout',
         'controller' => 'AuthController',
         'method' => 'logout'
     ],
+
+   
+    
+    // 'category-search' => [
+    //     'path' => '/category/search',
+    //     'controller' => 'CategoryController',
+    //     'method' => 'searchArticlesByCategory',
+    // ],
+    
+
+    
     
 
 ];

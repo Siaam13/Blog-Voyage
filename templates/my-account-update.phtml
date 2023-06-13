@@ -1,35 +1,33 @@
-
 <h2>Modification profil :</h2>
 <!-- Formulaire de modification des données de l'utilisateur -->
 
-<form class="form-update" method="post" action="<?= constructUrl('update') ?>">
+<form class="form-update" method="post" action="<?=htmlspecialchars(constructUrl('update'))?>">
     <label for="username">Nom d'utilisateur :</label>
-    <input type="text" id="username" name="username" value="<?= $user->getUsername() ?>">
+    <input type="text" id="username" name="username" value="<?=htmlspecialchars($user->getUsername())?>">
 
     <label for="firstname">Prénom :</label>
-    <input type="text" id="firstname" name="firstname" value="<?= $user->getFirstname() ?>">
+    <input type="text" id="firstname" name="firstname" value="<?=htmlspecialchars($user->getFirstname())?>">
 
     <label for="lastname">Nom :</label>
-    <input type="text" id="lastname" name="lastname" value="<?= $user->getLastname() ?>">
+    <input type="text" id="lastname" name="lastname" value="<?=htmlspecialchars($user->getLastname())?>">
 
     <label for="email">Email :</label>
-    <input type="email" id="email" name="email" value="<?= $user->getEmail() ?>">
+    <input type="email" id="email" name="email" value="<?=htmlspecialchars($user->getEmail())?>">
 
     <label for="country">Pays :</label>
-    <input type="text" id="country" name="country" value="<?= $user->getCountry() ?>">
+    <input type="text" id="country" name="country" value="<?=htmlspecialchars($user->getCountry())?>">
 
     <label for="address">Adresse :</label>
-    <input type="text" id="address" name="address" value="<?= $user->getAddress() ?>">
+    <input type="text" id="address" name="address" value="<?=htmlspecialchars($user->getAddress())?>">
 
     <label for="postal_code">Code postal :</label>
-    <input type="text" id="postal_code" name="postal_code" value="<?= $user->getPostalCode() ?>">
+    <input type="text" id="postal_code" name="postal_code" value="<?=htmlspecialchars($user->getPostalCode())?>">
 
     <label for="password">Nouveau mot de passe :</label>
     <input type="password" id="password" name="password">
 
     <label for="password-confirm">Confirmation du nouveau mot de passe :</label>
     <input type="password" id="password-confirm" name="password-confirm">
-
 
     <input type="submit" id="btn-update" value="Enregistrer les modifications">
 </form>

@@ -1,44 +1,42 @@
-<!-- Le code HTML du corps de la page Article --> 
 <div class="article">
-      <div class="left">
-      <?php if ($article->getImage()): ?>
-                <img src="<?=asset('images/' . $article->getImage())?>" alt="">
-            <?php endif; ?>
-      </div>
-      <div class="right">
-      <p class="date">Créé le <?=$article->getFormattedCreatedAt();?>   | |   </small>
-      <small class="category-title"><?=$article->getCategoryName();?></small>
-        <h3><?=$article->getTitle();?></h3>
-        <p class="card-text"><?=$article->getContent();?></p>
-        
-      </div>
-      <?php if ($isLoggedIn): ?>
-    <div class="comment">
-        <h2>Commentaires</h2>
-        <form action="<?= constructUrl('article', ['id' => $idArticle]) ?>" method="POST">
-            <fieldset>
-                <legend> Ajouter un commentaire </legend>
-                <input type="hidden" name="userId" value="<?= $currentUserId ?>">
-                <div class="comment-content">
-                    <label for="content">Commentaire :</label>
-                    <textarea id="content" name="content"></textarea>
-                </div>
-                <input id="btn-comment" type="submit" value="Valider">
-            </fieldset>
-        </form>
-
-        <?php if (empty($comments)): ?>
-            <p>Soyez le premier à ajouter un commentaire !</p>
-        <?php else: ?>
-            <?php foreach ($comments as $comment): ?>
-                <div>
-                    <h3>Ajouté par <?= $comment->getUsername(); ?> le <?= $comment->getFormattedCreatedAt(); ?></h3>
-                    <p><?= $comment->getContent(); ?></p>
-                </div>
-            <?php endforeach; ?>
+    <div class="left">
+        <?php if ($article->getImage()): ?>
+            <img src="<?=htmlspecialchars(asset('images/' . $article->getImage()))?>" alt="">
         <?php endif; ?>
     </div>
-<?php else: ?>
-    <p>Connectez-vous pour ajouter un commentaire.</p>
-<?php endif; ?>
+    <div class="right">
+        <p class="date">Créé le <?=htmlspecialchars($article->getFormattedCreatedAt())?>   | |   </small>
+        <small class="category-title"><?=htmlspecialchars($article->getCategoryName())?></small>
+        <h3><?=htmlspecialchars($article->getTitle())?></h3>
+        <p class="card-text"><?=htmlspecialchars($article->getContent())?></p>
+    </div>
+    <?php if ($isLoggedIn): ?>
+        <div class="comment">
+            <h2>Commentaires</h2>
+            <form action="<?=htmlspecialchars(constructUrl('article', ['id' => $idArticle]))?>" method="POST">
+                <fieldset>
+                    <legend> Ajouter un commentaire </legend>
+                    <input type="hidden" name="userId" value="<?=htmlspecialchars($currentUserId)?>">
+                    <div class="comment-content">
+                        <label for="content">Commentaire :</label>
+                        <textarea id="content" name="content"></textarea>
+                    </div>
+                    <input id="btn-comment" type="submit" value="Valider">
+                </fieldset>
+            </form>
+
+            <?php if (empty($comments)): ?>
+                <p>Soyez le premier à ajouter un commentaire !</p>
+            <?php else: ?>
+                <?php foreach ($comments as $comment): ?>
+                    <div>
+                        <h3>Ajouté par <?=htmlspecialchars($comment->getUsername())?> le <?=htmlspecialchars($comment->getFormattedCreatedAt())?></h3>
+                        <p><?=htmlspecialchars($comment->getContent())?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <p>Connectez-vous pour ajouter un commentaire.</p>
+    <?php endif; ?>
 </div>

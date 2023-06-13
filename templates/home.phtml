@@ -1,27 +1,26 @@
 <?php foreach ($articles as $article): ?>
     <div class="article">
-      <div class="left">
-      <?php if ($article->getImage()): ?>
-                <img src="<?=asset('images/' . $article->getImage())?>" alt="">
+        <div class="left">
+            <?php if ($article->getImage()): ?>
+                <img src="<?=htmlspecialchars(asset('images/' . $article->getImage()))?>" alt="">
             <?php endif; ?>
-      </div>
-      <div class="right">
-      <p class="date"></small>Créé le <?=$article->getFormattedCreatedAt();?></p>
-        <h3><?=$article->getTitle();?></h3>
+        </div>
+        <div class="right">
+            <p class="date"><small>Créé le <?=htmlspecialchars($article->getFormattedCreatedAt())?></small></p>
+            <h3><?=htmlspecialchars($article->getTitle())?></h3>
 
-        <div class="article-category"><?=$article->getCategoryName();?></div>
+            <div class="article-category"><?=htmlspecialchars($article->getCategoryName())?></div>
 
-        <p class="card-text"><?=mb_substr($article->getContent(), 0, 200)?> [...]</p>
+            <p class="card-text"><?=htmlspecialchars(mb_substr($article->getContent(), 0, 200))?> [...]</p>
 
-        <button class="btn-next">       
-         <a href="<?=constructUrl('article', ['id' => $article->getIdArticle()]);?>">Lire la suite</a>
-         <span class="arrow">
-          <i class="fas fa-chevron-right"></i>
-          <i class="fas fa-chevron-right"></i>
-          <i class="fas fa-chevron-right"></i>
-         </span>
-
-        </button> 
-      </div>
-      <?php endforeach; ?>
-    </div> 
+            <button class="btn-next">
+                <a href="<?=htmlspecialchars(constructUrl('article', ['id' => $article->getIdArticle()]))?>">Lire la suite</a>
+                <span class="arrow">
+                    <i class="fas fa-chevron-right"></i>
+                    <i class="fas fa-chevron-right"></i>
+                    <i class="fas fa-chevron-right"></i>
+                </span>
+            </button> 
+        </div>
+    </div>
+<?php endforeach; ?>

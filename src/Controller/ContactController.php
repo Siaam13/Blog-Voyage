@@ -1,6 +1,5 @@
 <?php
 
-// ContactController.php
 namespace App\Controller;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Mailer;

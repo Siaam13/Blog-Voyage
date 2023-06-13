@@ -1,19 +1,19 @@
 <h1>Mon compte</h1>
 
 <ul>
-    <li>Nom d'utilisateur : <?= $user->getUsername() ?></li>
-    <li>Prénom : <?= $user->getFirstname() ?></li>
-    <li>Nom : <?= $user->getLastname() ?></li>
-    <li>Email : <?= $user->getEmail() ?></li>
-    <li>Pays : <?= $user->getCountry() ?></li>
-    <li>Adresse : <?= $user->getAddress() ?></li>
-    <li>Code postal : <?= $user->getPostalCode() ?></li>
+    <li>Nom d'utilisateur : <?=htmlspecialchars($user->getUsername())?></li>
+    <li>Prénom : <?=htmlspecialchars($user->getFirstname())?></li>
+    <li>Nom : <?=htmlspecialchars($user->getLastname())?></li>
+    <li>Email : <?=htmlspecialchars($user->getEmail())?></li>
+    <li>Pays : <?=htmlspecialchars($user->getCountry())?></li>
+    <li>Adresse : <?=htmlspecialchars($user->getAddress())?></li>
+    <li>Code postal : <?=htmlspecialchars($user->getPostalCode())?></li>
 </ul>
-<button class="btn-next">       
-    <a href="<?= constructUrl('update')?>">Modifier</a>
+<button class="btn-next">
+    <a href="<?=htmlspecialchars(constructUrl('update'))?>">Modifier</a>
     <span class="arrow">
-    <i class="fas fa-chevron-right"></i>
-    <i class="fas fa-chevron-right"></i>
-    <i class="fas fa-chevron-right"></i>
+        <i class="fas fa-chevron-right"></i>
+        <i class="fas fa-chevron-right"></i>
+        <i class="fas fa-chevron-right"></i>
     </span>
-</button> 
+</button>

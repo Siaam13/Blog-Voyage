@@ -95,6 +95,53 @@ public function deleteArticle(Article $article)
     $this->db->delete($sql, [$article->getIdArticle()]);
 }
 
+// public function getArticlesByCategory($categoryId)
+// {
+//     $sql = 'SELECT A.idArticle, A.title, A.content, A.image, A.createdAt, C.idCategory, C.name 
+//             FROM article AS A
+//             INNER JOIN category AS C 
+//             ON A.categoryId = C.idCategory
+//             WHERE C.idCategory = ?';
+
+//     $results = $this->db->getAllResults($sql, [$categoryId]);
+
+//     $articles = [];
+
+//     foreach ($results as $result) {
+//         $category = new Category($result);
+//         $article = new Article($result);
+//         $article->setCategory($category);
+//         $articles[] = $article;
+//     }
+
+//     return $articles;
+// }
+
+    public function searchArticlesByCategory(int $categoryId)
+    {
+        $sql = 'SELECT A.idArticle, A.title, A.content, A.image, A.createdAt, C.idCategory, C.name 
+                FROM article AS A
+                INNER JOIN category AS C 
+                ON A.categoryId = C.idCategory
+                WHERE C.idCategory = ?
+                ORDER BY createdAt DESC';
+
+        $results = $this->db->getAllResults($sql, [$categoryId]);
+
+        $articles = [];
+
+        foreach ($results as $result) {
+            $category = new Category($result);
+            $article = new Article($result);
+            $article->setCategory($category);
+            $articles[] = $article;
+        }
+
+        return $articles;
+    }
+
+
+
 
 
 }
